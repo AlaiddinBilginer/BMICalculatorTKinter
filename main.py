@@ -37,8 +37,11 @@ def calculateBMI(weight, height):
 resultLabel = tkinter.Label(text=" ")
 def clickedButton():
     resultLabel.config(text="")
+    height = heightEntry.get()
+    weight = weightEntry.get()
+
     try:
-        bmi = calculateBMI(int(weightEntry.get()), int(heightEntry.get()))
+        bmi = calculateBMI(int(weight), int(height))
         if bmi <= 18.4:
             state = "underweight"
         elif bmi > 18.4 and bmi <= 24.9:
@@ -47,19 +50,21 @@ def clickedButton():
             state = "overweight"
         else:
             state = "obese"
-
         resultLabel.config(text=f"Your BMI value is {bmi: .2f}, you are {state}.")
-        resultLabel.pack(side="bottom")
         resultLabel.config(font=("Verdena", 8, "bold"))
+        resultLabel.pack(side="bottom")
     except ValueError:
-        resultLabel.config(text="Please enter the correct values")
-
+        if height == "" or weight == "":
+            resultLabel.config(text="Don't enter empty value")
+            resultLabel.config(font=("Verdena", 8, "bold"))
+            resultLabel.pack(side="bottom")
+        else:
+            resultLabel.config(text="Please enter the correct values")
+            resultLabel.config(font=("Verdena", 8, "bold"))
+            resultLabel.pack(side="bottom")
 
 calculateButton = tkinter.Button(text="Calculate BMI", command=clickedButton)
 calculateButton.config(bg="#30BB43", fg="white")
 calculateButton.place(x=87, y=180)
-
-#Result Label
-
 
 window.mainloop()
